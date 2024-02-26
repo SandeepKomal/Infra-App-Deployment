@@ -1,9 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: customer-deployment
+  name: customer
   labels:
     app: packersmovers
+    tier: backend
 spec:
   strategy:
     type: RollingUpdate
@@ -11,19 +12,21 @@ spec:
       maxSurge: 1
       maxUnavailable: 1
   revisionHistoryLimit: 4
-  replicas: 3
+  replicas: 2
   minReadySeconds: 10
   selector:
     matchLabels:
       app: packersmovers
+      tier: backend
   template:
     metadata:
       labels:
         app: packersmovers
+        tier: backend
     spec:
       containers:
       - name: customer
-        image: 533266968694.dkr.ecr.ap-south-1.amazonaws.com/customer:default_tag
+        image: 637423236688.dkr.ecr.us-east-1.amazonaws.com/spring:44
         imagePullPolicy: Always
         ports:
         - containerPort: 8081
